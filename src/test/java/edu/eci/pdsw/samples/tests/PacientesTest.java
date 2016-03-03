@@ -16,6 +16,12 @@
  */
 package edu.eci.pdsw.samples.tests;
 
+import edu.eci.pdsw.samples.entities.Paciente;
+import edu.eci.pdsw.samples.services.ExcepcionServiciosPacientes;
+import edu.eci.pdsw.samples.services.ServiciosPacientesStub;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -24,6 +30,15 @@ import static org.junit.Assert.*;
  *
  * @author hcadavid
  */
+/*
+    CLASES DE EQUIVALENCIA
+    
+    1.El pasiente no se encuentre registrado en el sistema con ese id
+    2.Que el pasiente que se va a registrar no sea con un id que este en el sistema y sea de otro pasiente
+    3.El id con el que se registra el pasiente sea un entero
+    4.El tipo de id que se ingresa sea una cadena
+    5.Los datos con los que se registra el paciente sean correctos.
+*/
 public class PacientesTest {
     
     public PacientesTest() {
@@ -35,7 +50,13 @@ public class PacientesTest {
     
     @Test
     public void registroPacienteTest(){
-        
+        Paciente paciente = new Paciente(1019093806, "Cedula", "Jairo Gonzalez Boada", null);
+        ServiciosPacientesStub servicio = new ServiciosPacientesStub();
+        try {
+            servicio.registrarNuevoPaciente(paciente);
+        } catch (ExcepcionServiciosPacientes ex) {
+            Logger.getLogger(PacientesTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     

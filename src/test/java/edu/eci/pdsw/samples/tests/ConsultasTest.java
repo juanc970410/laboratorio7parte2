@@ -46,20 +46,21 @@ public class ConsultasTest {
     
     
     @Test
-    public void registroConsultaAPacienteTest(){
+    public void registroConsultaAPacienteTest() throws ExcepcionServiciosPacientes{
         boolean paso = false;
         Paciente p = new Paciente(1234, "Cedula", "Nicolas", null);
         ServiciosPacientes sp = new ServiciosPacientesStub();
         int idp = p.getId();
         String tip = p.getTipo_id();
         Consulta c = new Consulta(null, "gripa");
+        sp.registrarNuevoPaciente(p);
         try {
             sp.agregarConsultaAPaciente(idp, tip, c);
             paso=true;
         } catch (ExcepcionServiciosPacientes ex) {
             Logger.getLogger(ConsultasTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        assertTrue(paso);
+        assertTrue("No se hizo correctamente la verificacion del paciente",paso);
     }
     
     

@@ -16,6 +16,13 @@
  */
 package edu.eci.pdsw.samples.tests;
 
+import edu.eci.pdsw.samples.entities.Consulta;
+import edu.eci.pdsw.samples.entities.Paciente;
+import edu.eci.pdsw.samples.services.ExcepcionServiciosPacientes;
+import edu.eci.pdsw.samples.services.ServiciosPacientes;
+import edu.eci.pdsw.samples.services.ServiciosPacientesStub;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -24,18 +31,35 @@ import static org.junit.Assert.*;
  *
  * @author hcadavid
  */
+
+/*
+  Clase de equivalencia:
+    1. El paciente esta registrado
+    2. El paciente no esta registracdo
+    3. El paciente ya tiene la consulta que se le está tratando de agregar
+    4. El paciene no tiene la consulta a agregar
+*/
 public class ConsultasTest {
     
     public ConsultasTest() {
     }
     
-    @Before
-    public void setUp() {
-    }
     
     @Test
-    public void registroPacienteTest(){
-        
+    public void registroConsultaAPacienteTest(){
+        boolean paso = false;
+        Paciente p = new Paciente(1234, "Cedula", "Nicolas", null);
+        ServiciosPacientes sp = new ServiciosPacientesStub();
+        int idp = p.getId();
+        String tip = p.getTipo_id();
+        Consulta c = new Consulta(null, "gripa");
+        try {
+            sp.agregarConsultaAPaciente(idp, tip, c);
+            paso=true;
+        } catch (ExcepcionServiciosPacientes ex) {
+            Logger.getLogger(ConsultasTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        assertTrue(paso);
     }
     
     

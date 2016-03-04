@@ -47,6 +47,7 @@ public abstract class ServiciosPacientes {
     public abstract Paciente consultarPaciente(int idPaciente,String tipoid) throws ExcepcionServiciosPacientes;
     
     
+    
     /**
      * Registra un nuevo PASIENTE en el sistema
      * @param p El nuevo paciente

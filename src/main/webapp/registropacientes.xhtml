@@ -5,7 +5,23 @@
     <h:head></h:head>
 
     <h:body>
-        
+        <h:form id ="formpaciente" style="text-align: center">
+            <p:dataTable var="pacientes" value="#{Re}">
+                <p:column headerText="Tipo Id">
+                    <h:outputText value= "#{pacientes.tipoid}"></h:outputText>
+                </p:column>
+                <!--p:column headerText="Id">
+                    <h:outputText value="#{pacientes.id}"></h:outputText>
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{pacientes.nombre}"></h:outputText>
+                </p:column>
+                <p:column headerText="Fecha de Nacimiento">
+                    <h:outputText value="#{pacientes.fechanacimiento}"></h:outputText>
+                </p:column-->
+            
+            </p:dataTable>
+        </h:form>
     </h:body>
 
 </html>

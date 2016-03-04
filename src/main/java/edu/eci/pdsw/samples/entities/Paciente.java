@@ -19,11 +19,14 @@ package edu.eci.pdsw.samples.entities;
 import java.sql.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author hcadavid
  */
+
 public class Paciente {
     
     private int id;

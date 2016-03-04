@@ -25,11 +25,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author hcadavid
  */
+
 public class ServiciosPacientesStub extends ServiciosPacientes{
 
     private final Map<Tupla<Integer,String>,Paciente> pacientes;

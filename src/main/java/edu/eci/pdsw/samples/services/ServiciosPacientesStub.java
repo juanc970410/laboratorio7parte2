@@ -18,7 +18,7 @@ package edu.eci.pdsw.samples.services;
 
 import edu.eci.pdsw.samples.entities.Consulta;
 import edu.eci.pdsw.samples.entities.Paciente;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Map;

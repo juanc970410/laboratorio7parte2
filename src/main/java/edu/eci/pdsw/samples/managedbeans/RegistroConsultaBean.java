@@ -35,6 +35,7 @@ import javax.faces.bean.SessionScoped;
  *
  * @author hcadavid
  */
+
 @SessionScoped
 @ManagedBean(name = "RegistroConsultaBean")
 

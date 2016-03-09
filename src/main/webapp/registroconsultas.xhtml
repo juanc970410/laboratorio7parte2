@@ -3,8 +3,39 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head></h:head>
+<<<<<<< HEAD
         <h:body>
  
         </h:body>
+=======
+    <h:body style="text-align: center">
+        <h:form id = "formconsulta">
+            <h1 style="text-align: left; color: black">Nueva Consulta</h1> 
+            <h:panelGrid  style="text-align: center" columns="2" cellpadding="4">
+                
+                <p:outputLabel  value="Fecha y Hora:" />
+                <p:calendar id="datetime" value="#{RegistroConsultaBean.consultaDate}" pattern="MM/dd/yyyy HH:mm:ss" />               
+                
+                <p:outputLabel  value="Descripcion de la consulta:"/>
+                <p:inputText type="number" value="#{RegistroConsultaBean.resumen}" />
+                
+                
+
+                <p:commandButton update="formconsulta" value="enviar"></p:commandButton>
+                
+            </h:panelGrid>
+            <h2>Consultas del Cliente</h2>
+            <p:dataTable var="selectedconsult" value="#{RegistroConsultaBean.consultasporPaciente}">
+                 <p:column headerText="fecha">
+                     <h:outputText value="$#{selectedconsult.fechayHora}"></h:outputText>
+                </p:column>
+                <p:column headerText="Descripcion de Consulta">
+                    <h:outputText value="#{selectedconsult.resumen}"></h:outputText>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+ 
+    </h:body>
+>>>>>>> b5e8cf2da0229794e09967d37af9b5af526b4a71
 
 </html>

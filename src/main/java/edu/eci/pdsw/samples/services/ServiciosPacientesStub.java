@@ -50,6 +50,7 @@ public class ServiciosPacientesStub extends ServiciosPacientes{
             throw new ExcepcionServiciosPacientes("Paciente "+idPaciente+" no esta registrado");
         }
         else{
+            
             return p;
         }
         

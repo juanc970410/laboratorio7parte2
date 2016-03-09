@@ -16,29 +16,81 @@
  */
 package edu.eci.pdsw.samples.managedbeans;
 
+import edu.eci.pdsw.samples.entities.Consulta;
+import edu.eci.pdsw.samples.entities.Paciente;
 import edu.eci.pdsw.samples.services.ServiciosPacientes;
 import java.io.Serializable;
+import java.util.ArrayList;
+import static java.util.Collection.*;
+
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 
 /**
  *
  * @author hcadavid
  */
 @SessionScoped
-@ManagedBean (name ="RegistroConsultaBean")
+@ManagedBean(name = "RegistroConsultaBean")
 
-public class RegistroConsultaBean implements Serializable{
+public class RegistroConsultaBean implements Serializable {
+
     private String tipoId;
     private int id;
     private String nombre;
     private Date bornDate;
+    private Date consultaDate;
+    private Paciente pacienteSeleccionado= new Paciente(1094, "cc", "jairo", null);
+    private List<Consulta> consultasporPaciente;
     
+
+    public List<Consulta> getConsultasporPaciente() {
+        
+        Iterator<Consulta> iter ;
+        iter = pacienteSeleccionado.getConsultas().iterator();
+        consultasporPaciente=new ArrayList<Consulta>();
+        for(int i=0; i<pacienteSeleccionado.getConsultas().size();i++){
+            consultasporPaciente.add(iter.next());
+        }
+        
+        return consultasporPaciente;
+    }
+
+    public void setConsultasporPaciente(List<Consulta> consultasporPaciente) {
+        this.consultasporPaciente = consultasporPaciente;
+    }
+    public Paciente getPacienteSeleccionado() {
+        return pacienteSeleccionado;
+    }
+
+    public void setPacienteSeleccionado(Paciente pacienteSeleccionado) {
+        this.pacienteSeleccionado = pacienteSeleccionado;
+    }
+    
+
+    public Date getConsultaDate() {
+        return consultaDate;
+    }
+
+    public void setConsultaDate(Date consultaDate) {
+        this.consultaDate = consultaDate;
+    }
+    private String resumen;
+
+    public String getResumen() {
+        return resumen;
+    }
+
+    public void setResumen(String resumen) {
+        this.resumen = resumen;
+    }
+
     public String getTipoId() {
         return tipoId;
-        
+
     }
 
     public void setTipoId(String tipoId) {
@@ -68,9 +120,7 @@ public class RegistroConsultaBean implements Serializable{
     public void setBornDate(Date bornDate) {
         this.bornDate = bornDate;
     }
-    
 
-    ServiciosPacientes sp=ServiciosPacientes.getInstance();
-    
-    
+    ServiciosPacientes sp = ServiciosPacientes.getInstance();
+
 }

@@ -16,18 +16,67 @@
  */
 package edu.eci.pdsw.samples.managedbeans;
 
+import edu.eci.pdsw.samples.entities.Paciente;
+import edu.eci.pdsw.samples.services.ExcepcionServiciosPacientes;
 import edu.eci.pdsw.samples.services.ServiciosPacientes;
 import java.io.Serializable;
-import javax.annotation.ManagedBean;
-import javax.enterprise.context.SessionScoped;
+import java.util.Date;
+import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
 
 /**
  *
  * @author hcadavid
  */
-@ManagedBean
 @SessionScoped
+@ManagedBean (name ="RegistroConsultaBean")
+
 public class RegistroConsultaBean implements Serializable{
+    private String tipoId;
+    private int id;
+    private String nombre;
+    private Date bornDate;
+    
+    
+    public String getTipoId() {
+        return tipoId;
+        
+    }
+
+    public void setTipoId(String tipoId) {
+        this.tipoId = tipoId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Date getBornDate() {
+        return bornDate;
+    }
+
+    public void setBornDate(Date bornDate) {
+        this.bornDate = bornDate;
+    }
+    
+    public void agregar() throws ExcepcionServiciosPacientes{
+        Paciente nPaciente = new Paciente(id, tipoId, nombre, (java.sql.Date) bornDate);
+        sp.registrarNuevoPaciente(nPaciente);
+    } 
     
     ServiciosPacientes sp=ServiciosPacientes.getInstance();
     

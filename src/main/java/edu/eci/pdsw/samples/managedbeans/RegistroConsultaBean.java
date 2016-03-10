@@ -103,8 +103,13 @@ public class RegistroConsultaBean implements Serializable {
     } 
     
     ServiciosPacientes sp=ServiciosPacientes.getInstance();
+    public void agregarConsulta() throws ExcepcionServiciosPacientes{
+        System.out.println(this.resumen);
+        Consulta nuevaConsulta = new Consulta(new java.sql.Date(consultaDate.getTime()),resumen);
+        sp.agregarConsultaAPaciente(pacienteSeleccionado.getId(), pacienteSeleccionado.getTipo_id(), nuevaConsulta);
+        consultasporPaciente = getConsultasporPaciente();
+    }
     
-
     public List<Consulta> getConsultasporPaciente() {
         Iterator<Consulta> iter ;
         iter = pacienteSeleccionado.getConsultas().iterator();
@@ -142,6 +147,7 @@ public class RegistroConsultaBean implements Serializable {
     }
 
     public void setResumen(String resumen) {
+        
         this.resumen = resumen;
     }
 }

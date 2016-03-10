@@ -12,19 +12,20 @@
                 <p:calendar id="datetime" value="#{RegistroConsultaBean.consultaDate}" pattern="MM/dd/yyyy HH:mm:ss" />               
                 
                 <p:outputLabel  value="Descripcion de la consulta:"/>
-                <p:inputText type="number" value="#{RegistroConsultaBean.resumen}" />
-                <p:commandButton update="formconsulta" value="enviar"></p:commandButton>
+                <p:inputText value="#{RegistroConsultaBean.resumen}" />
+                <p:commandButton update="formconsulta" value="Registrar Cita" action="#{RegistroConsultaBean.agregarConsulta()}"></p:commandButton>
                 
             </h:panelGrid>
             <h2>Consultas del Cliente</h2>
             <p:dataTable var="selectedconsult" value="#{RegistroConsultaBean.consultasporPaciente}">
-                 <p:column headerText="fecha">
-                     <h:outputText value="$#{selectedconsult.fechayHora}"></h:outputText>
+                 <p:column headerText="Fecha">
+                     <h:outputText value="#{selectedconsult.fechayHora}"></h:outputText>
                 </p:column>
                 <p:column headerText="Descripcion de Consulta">
                     <h:outputText value="#{selectedconsult.resumen}"></h:outputText>
                 </p:column>
             </p:dataTable>
+            <p:commandButton action="registropacientes" value="Lista Pacientes"></p:commandButton>
         </h:form>
  
     </h:body>

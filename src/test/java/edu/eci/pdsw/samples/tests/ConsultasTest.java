@@ -47,9 +47,9 @@ public class ConsultasTest {
     
     @Test
     public void registroConsultaAPacienteTest() throws ExcepcionServiciosPacientes{
+        ServiciosPacientes sp = new ServiciosPacientesStub();
         boolean paso = false;
         Paciente p = new Paciente(1234, "Cedula", "Nicolas", null);
-        ServiciosPacientes sp = new ServiciosPacientesStub();
         int idp = p.getId();
         String tip = p.getTipo_id();
         Consulta c = new Consulta(null, "gripa");

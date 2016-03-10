@@ -65,4 +65,10 @@ public abstract class ServiciosPacientes {
      * @throws ExcepcionServiciosPacientes si el paciente no existe.
      */
     public abstract void agregarConsultaAPaciente(int idPaciente,String tipoid,Consulta c) throws ExcepcionServiciosPacientes;
+    
+    /**
+     * Retorna una lista con todos los pacientes existentes
+     * @return una lista de pacientes
+     */
+    public abstract List<Paciente> obtenerPacientes();
 }

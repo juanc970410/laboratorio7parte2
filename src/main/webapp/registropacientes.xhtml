@@ -58,9 +58,31 @@
             <br/>
             <label>Ingrese su fecha de nacimiento</label>
             <br/>
-            <p:calendar value="#{RegistroConsultaBean.bornDate}" locale="es" navigator="true" pattern="dd-MMM-yyyy" />
+            <p:calendar value="#{RegistroConsultaBean.bornDate}" locale="es" navigator=" true" pattern="dd-MMM-yyyy" />
             <br/>
-            <p:commandButton update="formpaciente" value="enviar"></p:commandButton>
+            <p:commandButton update="formpaciente" value="enviar" action="#{RegistroConsultaBean.agregar()}"></p:commandButton>
+            <p:dataTable var="pacientes" value="#{RegistroConsultaBean.pacientes}">
+                <f:facet name="header">
+                    Lista de pacientes
+                </f:facet>
+                <p:column headerText="Id">
+                    <h:outputText value="#{pacientes.id}"/>
+                </p:column>
+                <p:column headerText="Tipo id">
+                    <h:outputText value="#{pacientes.tipo_id}"/>
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{pacientes.nombre}"/>
+                </p:column>
+                <p:column headerText="Fecha de nacimiento">
+                    <h:outputText value="#{pacientes.fechaNacimiento}"/>
+                </p:column>
+                <p:column headerText="Registro de cita">
+                    <p:commandButton action="registroconsultas" value="Registrar cita">
+                        <f:setPropertyActionListener value="#{pacientes}" target="#{RegistroConsultaBean.pacienteSeleccionado}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
         </h:form>
     </h:body>
 

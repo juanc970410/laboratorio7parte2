@@ -26,6 +26,7 @@ import static java.util.Collection.*;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -48,7 +49,19 @@ public class RegistroConsultaBean implements Serializable {
     private Date consultaDate;
     private Paciente pacienteSeleccionado= new Paciente(1094, "cc", "jairo", null);
     private List<Consulta> consultasporPaciente;
+    private List<Paciente> pacientes = new LinkedList<Paciente>();
     
+    public RegistroConsultaBean(){
+        this.pacientes = sp.obtenerPacientes();
+    }
+    
+    public List<Paciente> getPacientes() {
+        return pacientes;
+    }
+
+    public void setPacientes(List<Paciente> pacientes) {
+        this.pacientes = pacientes;
+    }
     
     public String getTipoId() {
         return tipoId;
@@ -84,15 +97,15 @@ public class RegistroConsultaBean implements Serializable {
     }
     
     public void agregar() throws ExcepcionServiciosPacientes{
-        Paciente nPaciente = new Paciente(id, tipoId, nombre, (java.sql.Date) bornDate);
+        Paciente nPaciente = new Paciente(id, tipoId, nombre, new java.sql.Date(bornDate.getTime()));
         sp.registrarNuevoPaciente(nPaciente);
+        pacientes = sp.obtenerPacientes();
     } 
     
     ServiciosPacientes sp=ServiciosPacientes.getInstance();
     
 
     public List<Consulta> getConsultasporPaciente() {
-        
         Iterator<Consulta> iter ;
         iter = pacienteSeleccionado.getConsultas().iterator();
         consultasporPaciente=new ArrayList<Consulta>();

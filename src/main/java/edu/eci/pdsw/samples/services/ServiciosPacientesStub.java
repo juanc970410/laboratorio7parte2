@@ -21,6 +21,7 @@ import edu.eci.pdsw.samples.entities.Paciente;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -38,10 +39,12 @@ import javax.faces.bean.SessionScoped;
 public class ServiciosPacientesStub extends ServiciosPacientes{
 
     private final Map<Tupla<Integer,String>,Paciente> pacientes;
+    private List<Paciente> listaPacientes;
     
     
     public ServiciosPacientesStub() {
         this.pacientes = new LinkedHashMap<>();
+        this.listaPacientes = new LinkedList<Paciente>();
         cargarDatosEstaticos(pacientes);
     }
     
@@ -62,7 +65,7 @@ public class ServiciosPacientesStub extends ServiciosPacientes{
     @Override
     public void registrarNuevoPaciente(Paciente p) throws ExcepcionServiciosPacientes {
         pacientes.put(new Tupla<>(p.getId(),p.getTipo_id()), p);
-        
+        listaPacientes.add(p);
     }
 
     @Override
@@ -75,7 +78,10 @@ public class ServiciosPacientesStub extends ServiciosPacientes{
             p.getConsultas().add(c);
         }
     }
-    
+    @Override
+    public List<Paciente> obtenerPacientes(){
+        return listaPacientes;
+    }
 
     private void cargarDatosEstaticos(Map<Tupla<Integer,String>,Paciente> pacientes){        
         try {
@@ -89,7 +95,7 @@ public class ServiciosPacientesStub extends ServiciosPacientes{
         
         
     }
-   
+    
 
 }
 

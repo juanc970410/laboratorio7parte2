@@ -19,6 +19,7 @@ package edu.eci.pdsw.samples.services;
 import edu.eci.pdsw.samples.entities.Consulta;
 import edu.eci.pdsw.samples.entities.Paciente;
 import java.util.List;
+import java.util.Properties;
 
 /**
  *
@@ -27,14 +28,15 @@ import java.util.List;
 public abstract class ServiciosPacientes {
     
     
-    private static ServiciosPacientes instance=new ServiciosPacientesStub();
+    private static ServiciosPacientes instance;
     
     
     protected ServiciosPacientes(){        
 
     }
     
-    public static ServiciosPacientes getInstance() throws RuntimeException{        
+    public static ServiciosPacientes getInstance(Properties prop) throws RuntimeException{
+        instance = new ServiciosPacientesPersistentes(prop);
         return instance;
     }
 

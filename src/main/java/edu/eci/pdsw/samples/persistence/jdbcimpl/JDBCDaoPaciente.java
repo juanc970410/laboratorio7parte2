@@ -110,6 +110,7 @@ public class JDBCDaoPaciente implements DaoPaciente {
                 guardarCon.setString(4, p.getTipo_id());
                 guardarCon.executeUpdate();
                 con.commit();
+                consul.setId(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(JDBCDaoPaciente.class.getName()).log(Level.SEVERE, null, ex);
@@ -119,12 +120,23 @@ public class JDBCDaoPaciente implements DaoPaciente {
     @Override
     public void update(Paciente p) throws PersistenceException {
         PreparedStatement ps;
-        /*try {
-            
+        try{
+            String actualizar = "INSERT INTO CONSULTAS (fecha_y_hora,resumen,PACIENTES_id,PACIENTES_tipo_id) values (?,?,?,?)";
+            ps = con.prepareStatement(actualizar);
+            for (Consulta c : p.getConsultas()){
+                if (c.getId()==-1){
+                    ps.setDate(1, c.getFechayHora());
+                    ps.setString(2, c.getResumen());
+                    ps.setInt(3, p.getId());
+                    ps.setString(4, p.getTipo_id());
+                    ps.executeUpdate();
+                    con.commit();
+                    c.setId(1);
+                }
+            }
         } catch (SQLException ex) {
-            throw new PersistenceException("An error ocurred while loading a product.",ex);
-        } */
-        
+            Logger.getLogger(JDBCDaoPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

@@ -20,6 +20,8 @@ import edu.eci.pdsw.samples.entities.Consulta;
 import edu.eci.pdsw.samples.entities.Paciente;
 import edu.eci.pdsw.samples.services.ExcepcionServiciosPacientes;
 import edu.eci.pdsw.samples.services.ServiciosPacientes;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import static java.util.Collection.*;
@@ -28,6 +30,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -47,11 +50,17 @@ public class RegistroConsultaBean implements Serializable {
     private String nombre;
     private Date bornDate;
     private Date consultaDate;
-    private Paciente pacienteSeleccionado= new Paciente(1094, "cc", "jairo", null);
+    private Paciente pacienteSeleccionado;
     private List<Consulta> consultasporPaciente;
     private List<Paciente> pacientes = new LinkedList<Paciente>();
+    ServiciosPacientes sp;
     
-    public RegistroConsultaBean(){
+    public RegistroConsultaBean() throws IOException{
+        InputStream input = null;
+        input = ClassLoader.getSystemResourceAsStream("applicationconfig_test.properties");
+        Properties properties=new Properties();
+        properties.load(input);
+        sp=ServiciosPacientes.getInstance(properties);
         this.pacientes = sp.obtenerPacientes();
     }
     
@@ -102,7 +111,7 @@ public class RegistroConsultaBean implements Serializable {
         pacientes = sp.obtenerPacientes();
     } 
     
-    ServiciosPacientes sp=ServiciosPacientes.getInstance();
+    
     public void agregarConsulta() throws ExcepcionServiciosPacientes{
         System.out.println(this.resumen);
         Consulta nuevaConsulta = new Consulta(new java.sql.Date(consultaDate.getTime()),resumen);

@@ -5,6 +5,20 @@
     <h:head></h:head>
     <h:body style="text-align: center">
         <h:form id = "formconsulta">
+            <p:dataTable var="informacion" value="#{RegistroConsultaBean.pacienteSeleccionado}" style="width: 25%">
+                
+                <p:column headerText="Datos del paciente">
+                    <p:row>
+                        <h:outputText value="#{informacion.id}"/>
+                    </p:row>
+                    <p:row>
+                        <h:outputText value="#{informacion.nombre}"/>
+                    </p:row>
+                    <p:row>
+                        <h:outputText value="#{informacion.fechaNacimiento}"/>
+                    </p:row>
+                </p:column>
+            </p:dataTable>
             <h1 style="text-align: left; color: black">Nueva Consulta</h1> 
             <h:panelGrid  style="text-align: center" columns="2" cellpadding="4">
                 

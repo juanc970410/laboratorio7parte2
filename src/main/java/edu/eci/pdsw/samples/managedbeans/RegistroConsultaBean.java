@@ -55,13 +55,9 @@ public class RegistroConsultaBean implements Serializable {
     private List<Paciente> pacientes = new LinkedList<Paciente>();
     ServiciosPacientes sp;
     
-    public RegistroConsultaBean() throws IOException{
-        InputStream input = null;
-        input = ClassLoader.getSystemResourceAsStream("applicationconfig.properties");
+    public RegistroConsultaBean() throws IOException, ExcepcionServiciosPacientes{
         
-        Properties properties=new Properties();
-        properties.load(input);
-        sp=ServiciosPacientes.getInstance(properties);
+        sp=ServiciosPacientes.getInstance();
         this.pacientes = sp.obtenerPacientes();
     }
     
@@ -134,7 +130,9 @@ public class RegistroConsultaBean implements Serializable {
     public void setConsultasporPaciente(List<Consulta> consultasporPaciente) {
         this.consultasporPaciente = consultasporPaciente;
     }
-    public Paciente getPacienteSeleccionado() {
+    public Paciente getPacienteSeleccionado() throws ExcepcionServiciosPacientes {
+        pacienteSeleccionado = sp.consultarPaciente(pacienteSeleccionado.getId(), pacienteSeleccionado.getTipo_id());
+        
         return pacienteSeleccionado;
     }
 

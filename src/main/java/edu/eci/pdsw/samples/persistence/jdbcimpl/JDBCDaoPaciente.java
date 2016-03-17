@@ -145,30 +145,14 @@ public class JDBCDaoPaciente implements DaoPaciente {
         List<Paciente> list = new LinkedList<Paciente>();
         PreparedStatement ps=null;
         try{
-            String consulta = "select pac.*, con.fecha_y_hora, con.resumen from PACIENTES as pac left join CONSULTAS as con on con.PACIENTES_id=pac.id and con.PACIENTES_tipo_id=pac.tipo_id ";
+            String consulta = "select * from PACIENTES";
             con.setAutoCommit(false);
             ps=con.prepareStatement(consulta);
             ResultSet executeQuery = ps.executeQuery();
-            boolean aux = true;
-            int idPac = 0;
             Paciente pac = null;
             while(executeQuery.next()){
-                if(aux){
-                    idPac = executeQuery.getInt("id");
-                    pac = new Paciente (idPac, executeQuery.getString("tipo_id"),executeQuery.getString("nombre"),executeQuery.getDate("fecha_nacimiento"));
-                    aux=false;
-                }
-                if(idPac == executeQuery.getInt("id")){
-                    if(executeQuery.getString("resumen") != null){
-                        Consulta cons = new Consulta(executeQuery.getDate("fecha_y_hora"), executeQuery.getString("resumen"));
-                        cons.setId(1);
-                        pac.getConsultas().add(cons);
-                    }
-                }else{
-                    list.add(pac);
-                    aux=true;
-                }
-                
+                pac = new Paciente (executeQuery.getInt("id"), executeQuery.getString("tipo_id"),executeQuery.getString("nombre"),executeQuery.getDate("fecha_nacimiento"));
+                list.add(pac);
             }
             con.commit();
         }catch (SQLException ex){

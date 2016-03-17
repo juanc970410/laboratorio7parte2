@@ -18,6 +18,7 @@ package edu.eci.pdsw.samples.services;
 
 import edu.eci.pdsw.samples.entities.Consulta;
 import edu.eci.pdsw.samples.entities.Paciente;
+import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
@@ -35,8 +36,8 @@ public abstract class ServiciosPacientes {
 
     }
     
-    public static ServiciosPacientes getInstance(Properties prop) throws RuntimeException{
-        instance = new ServiciosPacientesPersistentes(prop);
+    public static ServiciosPacientes getInstance() throws RuntimeException, IOException{
+        instance = new ServiciosPacientesPersistentes();
         return instance;
     }
 
@@ -72,5 +73,5 @@ public abstract class ServiciosPacientes {
      * Retorna una lista con todos los pacientes existentes
      * @return una lista de pacientes
      */
-    public abstract List<Paciente> obtenerPacientes();
+    public abstract List<Paciente> obtenerPacientes() throws ExcepcionServiciosPacientes;
 }

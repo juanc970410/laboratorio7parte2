@@ -13,6 +13,7 @@ import edu.eci.pdsw.samples.persistence.PersistenceException;
 import edu.eci.pdsw.samples.persistence.jdbcimpl.JDBCDaoFactory;
 import edu.eci.pdsw.samples.persistence.jdbcimpl.JDBCDaoPaciente;
 import java.io.InputStream;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -43,7 +44,11 @@ public class ServiciosPacientesPersistentes extends ServiciosPacientes{
 
     @Override
     public void registrarNuevoPaciente(Paciente p) throws ExcepcionServiciosPacientes {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            daof.getDaoPaciente().save(p);
+        } catch (PersistenceException ex) {
+            Logger.getLogger(ServiciosPacientesPersistentes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -59,7 +64,13 @@ public class ServiciosPacientesPersistentes extends ServiciosPacientes{
 
     @Override
     public List<Paciente> obtenerPacientes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Paciente> list = null;
+        try {
+            list = daof.getDaoPaciente().cargarPacientes();
+        } catch (PersistenceException ex) {
+            Logger.getLogger(ServiciosPacientesPersistentes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
     
 }

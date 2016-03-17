@@ -26,6 +26,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -122,6 +124,7 @@ public class JDBCDaoPaciente implements DaoPaciente {
         PreparedStatement ps;
         try{
             String actualizar = "INSERT INTO CONSULTAS (fecha_y_hora,resumen,PACIENTES_id,PACIENTES_tipo_id) values (?,?,?,?)";
+            con.setAutoCommit(false);
             ps = con.prepareStatement(actualizar);
             for (Consulta c : p.getConsultas()){
                 if (c.getId()==-1){
@@ -138,5 +141,39 @@ public class JDBCDaoPaciente implements DaoPaciente {
             Logger.getLogger(JDBCDaoPaciente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    public List<Paciente> cargarPacientes() throws PersistenceException{
+        List<Paciente> list = new LinkedList<Paciente>();
+        PreparedStatement ps=null;
+        try{
+            String consulta = "select pac.*, con.fecha_y_hora, con.resumen from PACIENTES as pac left join CONSULTAS as con on con.PACIENTES_id=pac.id and con.PACIENTES_tipo_id=pac.tipo_id ";
+            con.setAutoCommit(false);
+            ps=con.prepareStatement(consulta);
+            ResultSet executeQuery = ps.executeQuery();
+            boolean aux = true;
+            int idPac = 0;
+            Paciente pac = null;
+            while(executeQuery.next()){
+                if(aux){
+                    idPac = executeQuery.getInt("id");
+                    pac = new Paciente (idPac, executeQuery.getString("tipo_id"),executeQuery.getString("nombre"),executeQuery.getDate("fecha_nacimiento"));
+                    aux=false;
+                }
+                if(idPac == executeQuery.getInt("id")){
+                    if(executeQuery.getString("resumen") != null){
+                        Consulta cons = new Consulta(executeQuery.getDate("fecha_y_hora"), executeQuery.getString("resumen"));
+                        cons.setId(1);
+                        pac.getConsultas().add(cons);
+                    }
+                }else{
+                    list.add(pac);
+                    aux=true;
+                }
+                
+            }
+            con.commit();
+        }catch (SQLException ex){
+            throw new PersistenceException("An error ocurred while loading a list.",ex); 
+        }
+        return list;
+    }
 }

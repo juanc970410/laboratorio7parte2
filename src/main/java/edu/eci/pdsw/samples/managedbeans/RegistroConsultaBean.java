@@ -57,7 +57,8 @@ public class RegistroConsultaBean implements Serializable {
     
     public RegistroConsultaBean() throws IOException{
         InputStream input = null;
-        input = ClassLoader.getSystemResourceAsStream("applicationconfig_test.properties");
+        input = ClassLoader.getSystemResourceAsStream("applicationconfig.properties");
+        
         Properties properties=new Properties();
         properties.load(input);
         sp=ServiciosPacientes.getInstance(properties);

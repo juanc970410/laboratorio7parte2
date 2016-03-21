@@ -88,6 +88,7 @@ public class ServiciosPacientesPersistentes extends ServiciosPacientes{
             Paciente p = daof.getDaoPaciente().load(idPaciente, tipoid);
             p.getConsultas().add(c);
             daof.getDaoPaciente().update(p);
+            
         } catch (PersistenceException ex) {
             Logger.getLogger(ServiciosPacientesPersistentes.class.getName()).log(Level.SEVERE, null, ex);
         }

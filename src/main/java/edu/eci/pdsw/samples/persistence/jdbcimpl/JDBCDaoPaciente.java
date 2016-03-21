@@ -66,12 +66,14 @@ public class JDBCDaoPaciente implements DaoPaciente {
                     
                     Consulta c = new Consulta(resp.getDate("fecha_y_hora"), resp.getString("resumen"));
                     consultas.add(c);
+                    c.setId(1);
                 }
             }
             while(resp.next()){
                 p = new Paciente(idpaciente, tipoid,resp.getString("nombre"),resp.getDate("fecha_nacimiento"));
                 Consulta c = new Consulta(resp.getDate("fecha_y_hora"), resp.getString("resumen"));
                 consultas.add(c);
+                c.setId(1);
             }
             p.setConsultas(consultas);
         } catch (SQLException ex) {
@@ -98,21 +100,21 @@ public class JDBCDaoPaciente implements DaoPaciente {
         }
         
         try{
-            
             Set<Consulta> consultas = p.getConsultas();
             for (Consulta consul : consultas){
-                PreparedStatement guardarCon = null;
-                String insertConsulta = "INSERT INTO CONSULTAS (fecha_y_hora,resumen,PACIENTES_id, PACIENTES_tipo_id) VALUES (?,?,?,?)";
-                con.setAutoCommit(false);
-                guardarCon = con.prepareStatement(insertConsulta);
-                
-                guardarCon.setDate(1, consul.getFechayHora());
-                guardarCon.setString(2, consul.getResumen());
-                guardarCon.setInt(3, p.getId());
-                guardarCon.setString(4, p.getTipo_id());
-                guardarCon.executeUpdate();
-                con.commit();
-                consul.setId(1);
+                if(consul.getId() == -1){
+                    PreparedStatement guardarCon = null;
+                    String insertConsulta = "INSERT INTO CONSULTAS (fecha_y_hora,resumen,PACIENTES_id, PACIENTES_tipo_id) VALUES (?,?,?,?)";
+                    con.setAutoCommit(false);
+                    guardarCon = con.prepareStatement(insertConsulta);
+                    guardarCon.setDate(1, consul.getFechayHora());
+                    guardarCon.setString(2, consul.getResumen());
+                    guardarCon.setInt(3, p.getId());
+                    guardarCon.setString(4, p.getTipo_id());
+                    guardarCon.executeUpdate();
+                    consul.setId(1);
+                    con.commit();
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(JDBCDaoPaciente.class.getName()).log(Level.SEVERE, null, ex);

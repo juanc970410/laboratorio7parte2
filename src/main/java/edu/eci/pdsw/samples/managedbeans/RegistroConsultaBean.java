@@ -110,7 +110,7 @@ public class RegistroConsultaBean implements Serializable {
     
     
     public void agregarConsulta() throws ExcepcionServiciosPacientes{
-        System.out.println(this.resumen);
+        
         Consulta nuevaConsulta = new Consulta(new java.sql.Date(consultaDate.getTime()),resumen);
         sp.agregarConsultaAPaciente(pacienteSeleccionado.getId(), pacienteSeleccionado.getTipo_id(), nuevaConsulta);
         consultasporPaciente = getConsultasporPaciente();

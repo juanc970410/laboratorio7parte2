@@ -5,8 +5,14 @@
  */
 package edu.eci.pdsw.samples.persistence;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.util.Properties;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 /**
  *
@@ -14,23 +20,34 @@ import java.util.Properties;
  */
 public class DaoFactoryh2 extends DaoFactory{
     
-    private static final ThreadLocal<Connection> connectionInstance = new ThreadLocal<Connection>() {
-    };
-
-    private static Properties appProperties=null;
     
-    public DaoFactoryh2(Properties appProperties) {
+    
+    private static Properties appProperties=null;
+    SqlSessionFactory sqlsf = null;
+    SqlSession sqls = null;
+    
+    private DaoFactoryh2(Properties appProperties) {
         this.appProperties=appProperties;
+        SqlSessionFactory sqlSessionFactory = null;
+        if (sqlsf == null) {
+            InputStream inputStream;
+            try {
+                inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+                sqlsf = new SqlSessionFactoryBuilder().build(inputStream);
+            } catch (IOException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 
     @Override
     public void beginSession() throws PersistenceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        sqls = sqlsf.openSession();
     }
 
     @Override
     public DaoPaciente getDaoPaciente() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new DaoPacienteh2();
     }
 
     @Override

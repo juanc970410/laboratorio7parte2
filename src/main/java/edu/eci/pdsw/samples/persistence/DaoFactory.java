@@ -36,7 +36,7 @@ public abstract class DaoFactory {
                 if (instance == null) {
                     if (appProperties.get("dao").equals("jdbc")) {
                         instance = new JDBCDaoFactory(appProperties);
-                    } else if (appProperties.get("dao").equals("h2")){
+                    } else if (appProperties.get("dao").equals("mybatis")){
                         instance = new DaoFactoryh2(appProperties);
                     }else{
                         throw new RuntimeException("Wrong configuration: Unsupported DAO:" + appProperties.get("dao"));

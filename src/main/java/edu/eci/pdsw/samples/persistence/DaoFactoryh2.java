@@ -26,7 +26,7 @@ public class DaoFactoryh2 extends DaoFactory{
     SqlSessionFactory sqlsf = null;
     SqlSession sqls = null;
     
-    private DaoFactoryh2(Properties appProperties) {
+    public DaoFactoryh2(Properties appProperties) {
         this.appProperties=appProperties;
         SqlSessionFactory sqlSessionFactory = null;
         if (sqlsf == null) {
@@ -47,22 +47,28 @@ public class DaoFactoryh2 extends DaoFactory{
 
     @Override
     public DaoPaciente getDaoPaciente() {
-        return new DaoPacienteh2();
+        return new DaoPacienteh2(sqls);
     }
 
     @Override
     public void commitTransaction() throws PersistenceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (sqls!=null){
+            sqls.commit();
+        }
     }
 
     @Override
     public void rollbackTransaction() throws PersistenceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (sqls!=null){
+            sqls.rollback();
+        }
     }
 
     @Override
     public void endSession() throws PersistenceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(sqls!=null){
+            sqls.close();
+        }
     }
     
 }

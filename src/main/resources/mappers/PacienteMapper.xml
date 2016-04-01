@@ -30,4 +30,8 @@
     <insert id="insertConsulta" parameterType="map" useGeneratedKeys="true" keyProperty="consulta.id">
         insert into CONSULTAS (fecha_y_hora,resumen,PACIENTES_id, PACIENTES_tipo_id) values (#{consulta.fechayHora},#{consulta.resumen},#{idpaciente},#{tipoidpaciente})
     </insert>
+    
+    <select id="cargaPacientes">
+        select id, tipo_id, nombre, fecha_nacimiento, idCONSULTAS as consulta_idCONSULTAS, fecha_y_hora as consilta_fecha_y_hora, resumen ad consulta_resumen from PACIENTES left join CONSULTAS 
+    </select>
 </mapper>

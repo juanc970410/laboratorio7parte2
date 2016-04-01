@@ -18,6 +18,7 @@ package edu.eci.pdsw.samples.mybatis.mappers;
 
 import edu.eci.pdsw.samples.entities.Consulta;
 import edu.eci.pdsw.samples.entities.Paciente;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -48,4 +49,5 @@ public interface PacienteMapper {
      */
     public void insertConsulta(@Param("consulta") Consulta con,@Param("idpaciente")int id,@Param("tipoidpaciente")String tipoid);
      
+    public List<Paciente> cargaPacientes();
 }

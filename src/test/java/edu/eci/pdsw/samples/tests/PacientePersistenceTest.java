@@ -68,7 +68,7 @@ public class PacientePersistenceTest {
     @Test
     public void pacienteConMasDeUnaConsulta() throws IOException, PersistenceException{
         InputStream input = null;
-        input = ClassLoader.getSystemResourceAsStream("applicationconfig.properties");
+        input = ClassLoader.getSystemResourceAsStream("applicationconfig_test.properties");
         Properties properties=new Properties();
         properties.load(input);
         DaoFactory daof=DaoFactory.getInstance(properties);

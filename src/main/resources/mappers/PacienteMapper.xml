@@ -31,7 +31,7 @@
         insert into CONSULTAS (fecha_y_hora,resumen,PACIENTES_id, PACIENTES_tipo_id) values (#{consulta.fechayHora},#{consulta.resumen},#{idpaciente},#{tipoidpaciente})
     </insert>
     
-    <select id="cargaPacientes">
-        select id, tipo_id, nombre, fecha_nacimiento, idCONSULTAS as consulta_idCONSULTAS, fecha_y_hora as consilta_fecha_y_hora, resumen ad consulta_resumen from PACIENTES left join CONSULTAS 
+    <select id="cargaPacientes" resultMap="Pacientes">
+        select id, tipo_id, nombre, fecha_nacimiento, idCONSULTAS as consulta_idCONSULTAS, fecha_y_hora as consulta_fecha_y_hora, resumen as consulta_resumen from PACIENTES as pac left join CONSULTAS as con on con.PACIENTES_id=pac.id and con.PACIENTES_tipo_id=pac.tipo_id
     </select>
 </mapper>

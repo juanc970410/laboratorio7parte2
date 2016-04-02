@@ -49,5 +49,9 @@ public interface PacienteMapper {
      */
     public void insertConsulta(@Param("consulta") Consulta con,@Param("idpaciente")int id,@Param("tipoidpaciente")String tipoid);
      
+    /**
+     * Consultar todos los pacientes de la base de datos
+     * @return lista de pacientres
+     */
     public List<Paciente> cargaPacientes();
 }

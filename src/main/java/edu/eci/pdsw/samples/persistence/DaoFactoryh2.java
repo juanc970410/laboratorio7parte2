@@ -22,21 +22,18 @@ public class DaoFactoryh2 extends DaoFactory{
     
     
     
-    private static Properties appProperties=null;
-    SqlSessionFactory sqlsf = null;
-    SqlSession sqls = null;
     
-    public DaoFactoryh2() {
-        
-        SqlSessionFactory sqlSessionFactory = null;
-        if (sqlsf == null) {
+    private static SqlSessionFactory sqlsf;
+    private static SqlSession sqls = null;
+    
+    public DaoFactoryh2(Properties properties) {
+        sqlsf = null;
+        try {
             InputStream inputStream;
-            try {
-                inputStream = Resources.getResourceAsStream("mybatis-config.xml");
-                sqlsf = new SqlSessionFactoryBuilder().build(inputStream);
-            } catch (IOException e) {
-                throw new RuntimeException(e.getCause());
-            }
+            inputStream = Resources.getResourceAsStream(properties.getProperty("config"));
+            sqlsf = new SqlSessionFactoryBuilder().build(inputStream);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex.getCause());
         }
     }
 

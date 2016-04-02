@@ -16,6 +16,8 @@
  */
 package edu.eci.pdsw.samples.tests;
 
+import edu.eci.pdsw.samples.entities.Consulta;
+import edu.eci.pdsw.samples.entities.Paciente;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.ibatis.io.Resources;
@@ -26,6 +28,10 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import edu.eci.pdsw.samples.mybatis.mappers.PacienteMapper;
+import edu.eci.pdsw.samples.persistence.DaoFactoryh2;
+import edu.eci.pdsw.samples.persistence.DaoPacienteh2;
+import edu.eci.pdsw.samples.persistence.PersistenceException;
+import java.util.Properties;
 
 /**
  *
@@ -56,12 +62,71 @@ public class PersistenceTest {
     
     
     @Test
-    public void TestOne(){
+    public void pacienteConMasDeUnaConsultaMyBatis() throws PersistenceException{
         SqlSessionFactory sessionfact = getSqlSessionFactory();
 
         SqlSession sqlss = sessionfact.openSession();
+        DaoFactoryh2 daof = new DaoFactoryh2();
+        daof.beginSession();
+        DaoPacienteh2 daopaciente = daof.getDaoPaciente();
+        Paciente p = new Paciente(1019129303, "CC", "Juan Camilo", java.sql.Date.valueOf("1997-04-10"));
+        Consulta c1 = new Consulta(java.sql.Date.valueOf("2016-03-05"), "Consulta general");
+        Consulta c2 = new Consulta(java.sql.Date.valueOf("2016-04-10"), "Presenta un cuadro viral");
+        p.getConsultas().add(c1);
+        p.getConsultas().add(c2);
+        
+        daopaciente.save(p);
+        Paciente p2 = daopaciente.load(1019129303, "CC");      
+        assertTrue("Los pacientes no son iguales con mybatis",p.equals(p2));
+                
+        
+        sqlss.close();
 
         
     }
+    @Test
+    public void pacienteConUnaConsultaMyBatis() throws IOException, PersistenceException{
+        SqlSessionFactory sessionfact = getSqlSessionFactory();
+
+        SqlSession sqlss = sessionfact.openSession();
+       
+        DaoFactoryh2 daof=new DaoFactoryh2();
+        daof.beginSession();
+        
+        DaoPacienteh2 nuevodao = daof.getDaoPaciente();
+        Paciente paciente = new Paciente(1019093806, "CC","jairo",java.sql.Date.valueOf("1994-04-10"));
+        Consulta consul = new Consulta(java.sql.Date.valueOf("2016-03-15"), "Infeccion");
+        
+        paciente.getConsultas().add(consul);
+        nuevodao.save(paciente);
+        Paciente pacienteDos = nuevodao.load(1019093806,"CC");
+        assertTrue("El paciente no quedo guardado con myBatis",paciente.equals(pacienteDos));
+        
+        sqlss.close();
+        
+    }
+    @Test
+    public void pacienteSinConsultas() throws IOException, PersistenceException{
+        SqlSessionFactory sessionfact = getSqlSessionFactory();
+
+        SqlSession sqlss = sessionfact.openSession();
+        DaoFactoryh2 daof= new DaoFactoryh2();
+        daof.beginSession();
+        
+        
+        DaoPacienteh2 daoPaciente = daof.getDaoPaciente();
+        
+        Paciente p = new Paciente(2103021, "CC", "Juan Camilo", java.sql.Date.valueOf("1997-04-10"));
+        
+        daoPaciente.save(p);
+        
+        Paciente p2 = daoPaciente.load(2103021, "CC");
+        
+        assertTrue("No se pudo guardar el paciente con My baties",p.equals(p2));
+        
+        sqlss.close();
+    }
+
+    
     
 }

@@ -26,8 +26,8 @@ public class DaoFactoryh2 extends DaoFactory{
     SqlSessionFactory sqlsf = null;
     SqlSession sqls = null;
     
-    public DaoFactoryh2(Properties appProperties) {
-        this.appProperties=appProperties;
+    public DaoFactoryh2() {
+        
         SqlSessionFactory sqlSessionFactory = null;
         if (sqlsf == null) {
             InputStream inputStream;
@@ -46,7 +46,7 @@ public class DaoFactoryh2 extends DaoFactory{
     }
 
     @Override
-    public DaoPaciente getDaoPaciente() {
+    public DaoPacienteh2 getDaoPaciente() {
         return new DaoPacienteh2(sqls);
     }
 

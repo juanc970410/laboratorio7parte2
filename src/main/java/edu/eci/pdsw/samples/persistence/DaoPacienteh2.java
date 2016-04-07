@@ -52,6 +52,7 @@ public class DaoPacienteh2 implements DaoPaciente{
             for (Consulta c : p.getConsultas()){
                 if(c.getId()==-1){
                     mapper.insertConsulta(c, p.getId(), p.getTipo_id());
+                    c.setId(1);
                 }
             }
         }

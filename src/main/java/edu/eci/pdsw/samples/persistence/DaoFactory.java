@@ -37,7 +37,6 @@ public abstract class DaoFactory {
                     if (appProperties.get("dao").equals("jdbc")) {
                         instance = new JDBCDaoFactory(appProperties);
                     } else if (appProperties.get("dao").equals("mybatis")){
-                        System.out.println("Oli");
                         instance = new DaoFactoryh2(appProperties);
                         
                     }else{
